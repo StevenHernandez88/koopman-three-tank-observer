@@ -1,0 +1,32 @@
+==============================================================================
+ ENTORNO
+==============================================================================
+  Python          : 3.10.11
+  Ejecutable      : C:\Users\PC\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.10_qbz5n2kfra8p0\python.exe
+  SO              : Windows-10-10.0.26200-SP0
+  numpy           : 1.26.2
+  scipy           : 1.15.3
+  CPU             : AMD Ryzen 7 7735HS with Radeon Graphics
+  Nucleos/hilos   : 8/16
+  RAM [GB]        : 31,2
+  Plan de energia : GUID de plan de energ¡a: 27fa6203-3987-4dcc-918d-748559d549ec  (Performance)
+  casadi          : 3.7.2
+  (cierra navegador/otros programas y conecta el cargador; usa el plan de energia 'Alto rendimiento' para medir)
+
+Entrenando EDMD y disenando L (alpha=1, como en los experimentos)...
+  rho(A)=0.99990 | rho(A-LC)=0.94262 | |L|max=0.5867
+
+==============================================================================
+ TIEMPOS POR PASO [ms]                  media       std       P99
+==============================================================================
+  Observador Koopman (A z + B u + L(y-Cz))                0.0250    0.0163    0.0633   (n=5000)
+  EKF predict+update (Jacobiano FD, como en vivo)         0.5254    0.1729    1.1157   (n=5000)
+    - Jacobiano por diferencias finitas (4 evals ODE)     0.1743    0.0933    0.4293   (n=5000)
+    - RK4 (4 evals ODE)                                   0.1703    0.1703    0.5024   (n=5000)
+  Jacobiano CasADi AD (llamada desde Python)              0.0383    0.0269    0.1225   (n=5000)
+  max|J_AD - J_FD| = 9.58e-07   (con eps=1e-6 hacia adelante no esperes < 1e-7)
+  MPC IPOPT N=20 (lazo cerrado simulado, warm-start)     14.4960    2.0427   19.9049   (n=350)
+  Lazo completo: observador + MPC                        14.5468    2.0479   19.9548   (n=350)
+  iteraciones IPOPT: media 6.8 | fallos 0
+
+Nota: estos tiempos son de calculo puro. El periodo real del lazo (~2.1 s) lo fija el firmware del ESP32, no el PC.
